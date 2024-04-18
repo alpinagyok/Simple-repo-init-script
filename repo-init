@@ -1,0 +1,18 @@
+if [ "$1" = "--set-org" ]; then
+	echo "export GIT_ORG_NAME=$2" >>~/.bashrc
+	echo "GIT_ORG_NAME is set to $2"
+	exit 0
+fi
+
+current_folder=${1:-$(basename $(pwd))}
+
+git init
+source ~/.bashrc
+git remote add origin git@github.com:${GIT_ORG_NAME}/${current_folder}.git
+git fetch
+git checkout master
+
+source ~/.nvm/nvm.sh
+nvm use
+
+npm i
